@@ -1,145 +1,93 @@
-# React Template with Vite and Deno
+# Family Expense Management App
 
-This is a GitHub template project to set up a [React](https://react.dev/) app
-with TypeScript running on [Deno](https://deno.com). It uses
-[Vite](https://vite.dev) as the dev server and an [oak](https://jsr.io/@oak/oak)
-http server on the backend to serve the built project.
+## Overview
+
+This project aims to simplify the process of managing family expenses. While tracking expenses manually is feasible, making changes and recalculations—especially when costs are interrelated or percentages shift—can be time-consuming. This tool will streamline the process, providing a user-friendly interface to track, manage, and divide expenses effectively.
+
+As a software developer, I decided to create this tool to fit my specific needs instead of searching for existing solutions. While I’ll draw inspiration from other apps down the line, the initial focus is on building a simple yet effective tool tailored to my family’s requirements.
+
+Additionally, this project serves as an opportunity to experiment with new technologies, such as Deno, while utilizing tools I’m already familiar with, like TypeScript and React.
+
+---
 
 ## Features
 
-- React with TypeScript on the frontend
-- Vite for the development server
-- Deno for server-side JavaScript/TypeScript
-- Oak framework for building web applications
-- Static file serving
-- Router setup
+### MVP (Minimum Viable Product)
 
-## Getting Started
+#### 1. Expense Tracking
+- **Add Expenses**: Add expenses with the following attributes:
+  - Description (e.g., "Groceries")
+  - Amount (e.g., 100.50)
+  - Interval (yearly, monthly, weekly, or custom)
+  - Date (when the expense starts or occurs)
+- **Edit/Delete Expenses**: Modify or remove existing expenses.
+- **View Expenses**: List all expenses, grouped or filtered by intervals.
+- **Aggregated Totals**: Display total costs for specific intervals (per year, month, week).
+
+#### 2. Cost Division
+- **Default Splits**: Assign a 50/50 split for expenses between family members by default.
+- **Customizable Splits**:
+  - Adjust the percentage for individual expenses.
+  - Allow fixed amounts for specific expenses.
+- **Individualized Overviews**:
+  - Display each person’s share of the expenses.
+  - Show aggregated totals for individual contributions.
+
+#### 3. Real-Time Updates
+- **Dynamic UI Updates**:
+  - Reflect changes instantly when editing an expense or adjusting divisions.
+  - Recalculate total costs and individual shares on the fly.
+- **Experimentation Mode**:
+  - Provide a sandbox mode where users can test changes before saving them.
+  - Show the impact of changes visually without committing them.
+
+---
+
+## Technologies
+
+### Core Technologies
+- **TypeScript**: The main language for the project, ensuring strong typing and maintainability.
+- **React**: For building the frontend user interface.
+- **Deno**: For backend development, offering modern and secure APIs.
+
+### Libraries and Tools
+- **tRPC**: Enables building and consuming fully type-safe APIs, sharing types between the backend and frontend.
+- **MongoDB & Mongoose**:
+  - MongoDB: A NoSQL database for storing data.
+  - Mongoose: A schema-based library to simplify data modeling and validation for MongoDB.
+- **Zod**: A TypeScript-first schema declaration and validation library, used for:
+  - Validating API request bodies.
+  - Validating frontend forms using shared types created by tRPC.
+
+---
+
+## Installation and Setup
 
 ### Prerequisites
+Before setting up the project, ensure you have the following installed:
+1. **Deno**: [Install Deno](https://deno.land/#installation)
+2. **Node.js (Optional)**: Required only if you want to install additional npm modules directly.
 
-To run this app, you will need to have [Deno](https://docs.deno.com/runtime/)
-installed.
+---
 
-### Installation
+### Installation Steps
 
-1. Create a new repository using this template. From the repository page, click
-   the "Use this template" button in the top right hand of the page:
+1. **Clone the Repository**
+   ```bash
+   git clone <repository-url>
+   cd <repository-folder>
+   ```
+2.	**Install Dependencies**
+Deno will automatically manage dependencies, including npm modules listed in the deno.json file.
+Run the following command to initialize the environment:
+   ```bash
+   deno task dev
+   ```
+   This will:
+- Start the development server with Vite for the frontend.
+- Run the backend server using the server/main.ts entry point.
 
-<img src="https://docs.github.com/assets/cb-76823/images/help/repository/use-this-template-button.png" alt="Use this template button" width="400">
-
-2. Use the Owner dropdown menu to select the account you want to own the
-   repository and set the repository name and visibility.
-
-3. Clone the repository created to your local machine.
-
-```sh
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
-```
-
-> For a step by step guide to using a GitHub template
-> [follow this walkthrough](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)
-
-## Install the dependencies
-
-To install the dependencies for the frontend and backend, run the following
-command:
-
-```sh
-deno install
-```
-
-## Run the dev server with vite
-
-The app uses a Vite dev server to run in development mode. To start the dev
-server, run the following command:
-
-```sh
-deno run dev
-```
-
-## Build the app
-
-To build the app for production, run the following command:
-
-```sh
-deno run build
-```
-
-## Run the backend server
-
-The backend server uses Deno and the Oak framework to serve the built React app.
-To start the backend server, run the following command:
-
-```sh
-deno run serve
-```
-
-## Running Tests
-
-To run the tests, use the following command:
-
-```sh
-deno test -A
-```
-
-## Project Structure
-
-```sh
-. 
-├── client 
-│   ├── dist 
-│   ├── public 
-│   └── src 
-│       ├── App.tsx 
-│       └── main.tsx 
-└── server 
-    ├── main.ts 
-    ├── main_test.ts 
-    └── util 
-        └── routeStaticFilesFrom.ts
-```
-
-- `App.tsx`: The main React component
-- `main.tsx`: The entry point for the React app
-- `main.ts`: The entry point for the Deno server
-- `main_test.ts`: The test file for the Deno server
-- `routeStaticFilesFrom.ts`: A utility function to serve static files
-- `dist`: The output directory for the built React app
-- `public`: The public directory for the React app
-
-## Points of note
-
-The React app is contained in the `client` directory. This is also where Vite
-will install its dependencies and build the app.
-
-There is a `vite.config.ts` file in the root of the project that configures Vite
-to build the app in the `client/dist` directory and serve the app on port 3000.
-
-The `deno.json` file contains the tasks to run the dev server, build the app,
-and serve the app, along with the dependencies and the compiler configuration
-required to use JSX and React.
-
-The Deno server is contained in the `server` directory. The server serves the
-built React app from the `client/dist` directory and listens on port 8000. This
-is what should be used in production.
-
-## Deploying
-
-You can deploy the app with [Deno Deploy](https://dash.deno.com/new_project).
-
-1. Link your github account
-2. Select the repository
-3. Give the project a name
-4. Set the "Build Step" to `deno task build`
-5. Set the entry point to `./server/main.ts`
-6. Click 'deploy project'
-
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request.
-
-## License
-
-This project is licensed under the MIT License.
+---
+## Directory Structure
+- `client/`: Contains the frontend code, including React components and Vite configuration.
+- `server/`: Contains the backend code, including API routes and data handling logic.
