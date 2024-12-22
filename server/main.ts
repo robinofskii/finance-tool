@@ -1,6 +1,8 @@
 import { z } from "zod";
-import { db } from "./api/db.ts";
+import { createHTTPServer } from "@trpc/server/adapters/standalone";
+import cors from "cors";
 
+import { db } from "./api/db.ts";
 import { publicProcedure, router as TrpcRouter } from "./trpc.ts";
 import { ExpenseSchema, FamilyMemberSchema } from "./schemas/index.ts";
 import { hasDbFile, seed } from "./api/seed.ts";
@@ -54,6 +56,15 @@ const appRouter = TrpcRouter({
       }
     }),
   },
+});
+
+const server = createHTTPServer({
+  router: appRouter,
+  middleware: cors(),
+});
+
+server.listen(8000, () => {
+  console.log("Server started on http://localhost:8000");
 });
 
 // Export type router type signature, this is used by the client.
