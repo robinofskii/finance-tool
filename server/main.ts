@@ -5,7 +5,6 @@ import express from "express";
 
 import { hasDbFile, seed } from "./api/seed.ts";
 import { appRouter } from "./router.ts";
-import { createContext } from "./trpc.ts";
 
 if (!hasDbFile()) {
   await seed();
@@ -17,7 +16,6 @@ app.use(
   trpcExpress.createExpressMiddleware({
     middleware: cors(),
     router: appRouter,
-    createContext,
   }),
 );
 app.listen(8000);
