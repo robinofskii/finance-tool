@@ -15,9 +15,12 @@
     "jsr:@std/io@0.224": "0.224.9",
     "jsr:@std/media-types@1": "1.1.0",
     "jsr:@std/path@1": "1.0.8",
+    "jsr:@std/path@^1.0.8": "1.0.8",
     "jsr:@tajpouria/cors@^1.2.1": "1.2.1",
     "npm:@deno/vite-plugin@1": "1.0.2_vite@5.4.11",
     "npm:@tanstack/react-query@^4.36.1": "4.36.1_react@18.3.1_react-dom@18.3.1__react@18.3.1",
+    "npm:@trpc/client@^11.0.0-rc.666": "11.0.0-rc.666_@trpc+server@11.0.0-rc.666__typescript@5.7.2_typescript@5.7.2",
+    "npm:@trpc/server@^11.0.0-rc.666": "11.0.0-rc.666_typescript@5.7.2",
     "npm:@types/node@*": "22.5.4",
     "npm:@types/react@^18.3.12": "18.3.17",
     "npm:@vitejs/plugin-react@^4.3.3": "4.3.4_vite@5.4.11_@babel+core@7.26.0",
@@ -25,7 +28,8 @@
     "npm:react-dom@^18.3.1": "18.3.1_react@18.3.1",
     "npm:react-router-dom@^7.0.2": "7.0.2_react@18.3.1_react-dom@18.3.1__react@18.3.1",
     "npm:react@^18.3.1": "18.3.1",
-    "npm:vite@^5.4.11": "5.4.11"
+    "npm:vite@^5.4.11": "5.4.11",
+    "npm:zod@^3.24.1": "3.24.1"
   },
   "jsr": {
     "@oak/commons@1.0.0": {
@@ -49,7 +53,7 @@
         "jsr:@std/http",
         "jsr:@std/io",
         "jsr:@std/media-types",
-        "jsr:@std/path",
+        "jsr:@std/path@1",
         "npm:path-to-regexp"
       ]
     },
@@ -402,6 +406,19 @@
         "use-sync-external-store"
       ]
     },
+    "@trpc/client@11.0.0-rc.666_@trpc+server@11.0.0-rc.666__typescript@5.7.2_typescript@5.7.2": {
+      "integrity": "sha512-BP3H0bktY03m7haVT5QoPR4sn30DNJcvFHsA3Msj3uPRY8JLVE03MR4rVG6T7VbcglORKpyMlRxjpUgdRmJErA==",
+      "dependencies": [
+        "@trpc/server",
+        "typescript"
+      ]
+    },
+    "@trpc/server@11.0.0-rc.666_typescript@5.7.2": {
+      "integrity": "sha512-k+jKrdH/owDRRXPR7oPKCQRTu0dOEnqdGh56863ym95sFY8qXE7BhOR8S4WqyZw1CiPZGjRkdFN0q/GsJhKsIA==",
+      "dependencies": [
+        "typescript"
+      ]
+    },
     "@types/babel__core@7.20.5": {
       "integrity": "sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==",
       "dependencies": [
@@ -658,6 +675,9 @@
     "turbo-stream@2.4.0": {
       "integrity": "sha512-FHncC10WpBd2eOmGwpmQsWLDoK4cqsA/UT/GqNoaKOQnT8uzhtCbg3EoUDMvqpOSAI0S26mr0rkjzbOO6S3v1g=="
     },
+    "typescript@5.7.2": {
+      "integrity": "sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg=="
+    },
     "undici-types@6.19.8": {
       "integrity": "sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw=="
     },
@@ -686,21 +706,28 @@
     },
     "yallist@3.1.1": {
       "integrity": "sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g=="
+    },
+    "zod@3.24.1": {
+      "integrity": "sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A=="
     }
   },
   "workspace": {
     "dependencies": [
       "jsr:@oak/oak@^17.1.3",
       "jsr:@std/assert@1",
+      "jsr:@std/path@^1.0.8",
       "jsr:@tajpouria/cors@^1.2.1",
       "npm:@deno/vite-plugin@1",
       "npm:@tanstack/react-query@^4.36.1",
+      "npm:@trpc/client@^11.0.0-rc.666",
+      "npm:@trpc/server@^11.0.0-rc.666",
       "npm:@types/react@^18.3.12",
       "npm:@vitejs/plugin-react@^4.3.3",
       "npm:react-dom@^18.3.1",
       "npm:react-router-dom@^7.0.2",
       "npm:react@^18.3.1",
-      "npm:vite@^5.4.11"
+      "npm:vite@^5.4.11",
+      "npm:zod@^3.24.1"
     ]
   }
 }
