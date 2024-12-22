@@ -16,6 +16,7 @@
     "@types/react": "npm:@types/react@^18.3.12",
     "@vitejs/plugin-react": "npm:@vitejs/plugin-react@^4.3.4",
     "cors": "npm:cors@^2.8.5",
+    "express": "npm:express@^4.21.2",
     "nanoid": "npm:nanoid@^5.0.9",
     "react": "npm:react@^18.3.1",
     "react-dom": "npm:react-dom@^18.3.1",
