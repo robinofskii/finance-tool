@@ -29,6 +29,7 @@
       "dom.iterable",
       "deno.ns"
     ],
+    "strict": true,
     "jsx": "react-jsx",
     "jsxImportSource": "react"
   },
