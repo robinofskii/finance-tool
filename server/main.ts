@@ -1,71 +1,23 @@
-import { z } from "zod";
-import { createHTTPServer } from "@trpc/server/adapters/standalone";
 import cors from "cors";
 
-import { db } from "./api/db.ts";
-import { publicProcedure, router as TrpcRouter } from "./trpc.ts";
-import { ExpenseSchema, FamilyMemberSchema } from "./schemas/index.ts";
+import * as trpcExpress from "@trpc/server/adapters/express";
+import express from "express";
+
 import { hasDbFile, seed } from "./api/seed.ts";
+import { appRouter } from "./router.ts";
+import { createContext } from "./trpc.ts";
 
 if (!hasDbFile()) {
   await seed();
 }
 
-const appRouter = TrpcRouter({
-  expenses: {
-    list: publicProcedure.query(async () => {
-      const expenses = await db.expenses.findMany();
-      return expenses;
-    }),
-    create: publicProcedure
-      .input(ExpenseSchema)
-      .mutation(async (opts) => {
-        const { input } = opts;
-        const expense = await db.expenses.create(input);
-        return expense;
-      }),
-    byId: publicProcedure.input(z.string()).query(async (opts) => {
-      const { input } = opts;
-      const expense = await db.expenses.findById(input);
-      return expense;
-    }),
-  },
-  familyMembers: {
-    list: publicProcedure.query(async () => {
-      const familyMembers = await db.familyMembers.findMany();
-      return familyMembers;
-    }),
-    create: publicProcedure
-      .input(FamilyMemberSchema)
-      .mutation(async (opts) => {
-        const { input } = opts;
-        const familyMember = await db.familyMembers.create(input);
-        return familyMember;
-      }),
-    byId: publicProcedure.input(z.string()).query(async (opts) => {
-      const { input } = opts;
-      const familyMember = await db.familyMembers.findById(input);
-      return familyMember;
-    }),
-  },
-  examples: {
-    iterable: publicProcedure.query(async function* () {
-      for (let i = 0; i < 3; i++) {
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        yield i;
-      }
-    }),
-  },
-});
-
-const server = createHTTPServer({
-  router: appRouter,
-  middleware: cors(),
-});
-
-server.listen(8000, () => {
-  console.log("Server started on http://localhost:8000");
-});
-
-// Export type router type signature, this is used by the client.
-export type AppRouter = typeof appRouter;
+const app = express();
+app.use(
+  "/trpc",
+  trpcExpress.createExpressMiddleware({
+    middleware: cors(),
+    router: appRouter,
+    createContext,
+  }),
+);
+app.listen(8000);
