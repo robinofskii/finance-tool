@@ -1,32 +1,32 @@
 {
-    "expenses": [
-        {
-            "id": "sDf62s2Q14uMCnScCZrpR",
-            "description": "Rent",
-            "amount": 850,
-            "interval": "monthly",
-            "date": "2021-01-01",
-            "createdAt": "2021-01-01",
-            "updatedAt": "2021-01-01"
-        },
-        {
-            "id": "joG65GIA6kXuY3DSzectH",
-            "description": "Groceries",
-            "amount": 50,
-            "interval": "weekly",
-            "date": "2021-01-01",
-            "createdAt": "2021-01-01",
-            "updatedAt": "2021-01-01"
-        }
-    ],
-    "familyMembers": [
-        {
-            "id": "6H2azHkKqSboI68glknUA",
-            "name": "Robin"
-        },
-        {
-            "id": "rphmYSoSb5ya5H1nULYGe",
-            "name": "Michele"
-        }
-    ]
+	"expenses": [
+		{
+			"id": "sDf62s2Q14uMCnScCZrpR",
+			"description": "Rent",
+			"amount": 850,
+			"interval": "monthly",
+			"date": "2021-01-01",
+			"createdAt": "2021-01-01",
+			"updatedAt": "2021-01-01"
+		},
+		{
+			"id": "joG65GIA6kXuY3DSzectH",
+			"description": "Groceries",
+			"amount": 50,
+			"interval": "weekly",
+			"date": "2021-01-01",
+			"createdAt": "2021-01-01",
+			"updatedAt": "2021-01-01"
+		}
+	],
+	"familyMembers": [
+		{
+			"id": "6H2azHkKqSboI68glknUA",
+			"name": "Robin"
+		},
+		{
+			"id": "rphmYSoSb5ya5H1nULYGe",
+			"name": "Michele"
+		}
+	]
 }
