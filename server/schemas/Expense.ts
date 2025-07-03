@@ -11,3 +11,12 @@ export const ExpenseSchema: z.ZodType<Expense> = z.object({
 	createdAt: z.string(),
 	updatedAt: z.string(),
 });
+
+export const ExpenseUpdateSchema = z.object({
+	id: z.string().uuid(),
+	description: z.string().min(1, "Description is required").optional(),
+	amount: z.number().positive("Amount must be greater than 0").optional(),
+	interval: z.enum(["yearly", "monthly", "weekly", "custom"]).optional(),
+	customIntervalDays: z.number().positive("Amount must be greater than").optional(),
+	date: z.string().optional(),
+});

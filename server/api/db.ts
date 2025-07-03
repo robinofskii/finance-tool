@@ -1,4 +1,4 @@
-import { join } from "@std/path";
+import { join } from "jsr:@std/path@^1.0.8";
 import type { Expense, FamilyMember } from "../types/index.ts";
 
 const dataPath = join("data", "data.json");
@@ -11,7 +11,9 @@ async function readData<T>(key: string): Promise<T[]> {
 }
 
 async function writeData<T>(key: string, data: T[]): Promise<void> {
-	await Deno.writeTextFile(dataPath, JSON.stringify({ [key]: data }));
+	const existingData = JSON.parse(await Deno.readTextFile(dataPath));
+	existingData[key] = data;
+	await Deno.writeTextFile(dataPath, JSON.stringify(existingData, null, 2));
 }
 
 export const db = {
@@ -28,6 +30,26 @@ export const db = {
 		async findById(id: string): Promise<Expense | undefined> {
 			const expenses = await readData<Expense>("expenses");
 			return expenses.find((expense) => expense.id === id);
+		},
+		async update(id: string, updatedExpense: Expense): Promise<Expense | null> {
+			const expenses = await readData<Expense>("expenses");
+			const index = expenses.findIndex((expense) => expense.id === id);
+			if (index === -1) {
+				return null;
+			}
+			expenses[index] = updatedExpense;
+			await writeData("expenses", expenses);
+			return updatedExpense;
+		},
+		async delete(id: string): Promise<boolean> {
+			const expenses = await readData<Expense>("expenses");
+			const index = expenses.findIndex((expense) => expense.id === id);
+			if (index === -1) {
+				return false;
+			}
+			expenses.splice(index, 1);
+			await writeData("expenses", expenses);
+			return true;
 		},
 	},
 	familyMembers: {

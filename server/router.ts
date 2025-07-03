@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { db } from "./api/db.ts";
-import { ExpenseSchema, FamilyMemberSchema } from "./schemas/index.ts";
+import { ExpenseSchema, ExpenseUpdateSchema, FamilyMemberSchema } from "./schemas/index.ts";
 import { publicProcedure, router } from "./trpc.ts";
 
 export const appRouter = router({
@@ -19,6 +19,35 @@ export const appRouter = router({
 			const { input } = opts;
 			const expense = await db.expenses.findById(input);
 			return expense;
+		}),
+		update: publicProcedure.input(
+			z.object({
+				id: z.string().uuid(),
+				data: ExpenseUpdateSchema.omit({ id: true }),
+			})
+		).mutation(async (opts) => {
+			const { input } = opts;
+			const existingExpense = await db.expenses.findById(input.id);
+			if (!existingExpense) {
+				throw new Error("Expense not found");
+			}
+			
+			const updatedExpense = {
+				...existingExpense,
+				...input.data,
+				updatedAt: new Date().toISOString(),
+			};
+			
+			const result = await db.expenses.update(input.id, updatedExpense);
+			return result;
+		}),
+		delete: publicProcedure.input(z.string().uuid()).mutation(async (opts) => {
+			const { input } = opts;
+			const success = await db.expenses.delete(input);
+			if (!success) {
+				throw new Error("Expense not found");
+			}
+			return { success: true };
 		}),
 	},
 	familyMembers: {
