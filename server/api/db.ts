@@ -1,7 +1,6 @@
-import { join } from "jsr:@std/path@^1.0.8";
 import type { Expense, FamilyMember } from "../types/index.ts";
 
-const dataPath = join("data", "data.json");
+const dataPath = "data/data.json";
 
 async function readData<T>(key: string): Promise<T[]> {
 	const data = await Deno.readTextFile(dataPath);

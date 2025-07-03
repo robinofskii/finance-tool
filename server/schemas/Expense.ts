@@ -2,7 +2,7 @@ import { z } from "zod";
 import type { Expense } from "../types/index.ts";
 
 export const ExpenseSchema: z.ZodType<Expense> = z.object({
-	id: z.string().uuid(),
+	id: z.string(),
 	description: z.string().min(1, "Description is required"),
 	amount: z.number().positive("Amount must be greater than 0"),
 	interval: z.enum(["yearly", "monthly", "weekly", "custom"]),
@@ -13,7 +13,6 @@ export const ExpenseSchema: z.ZodType<Expense> = z.object({
 });
 
 export const ExpenseUpdateSchema = z.object({
-	id: z.string().uuid(),
 	description: z.string().min(1, "Description is required").optional(),
 	amount: z.number().positive("Amount must be greater than 0").optional(),
 	interval: z.enum(["yearly", "monthly", "weekly", "custom"]).optional(),

@@ -22,8 +22,8 @@ export const appRouter = router({
 		}),
 		update: publicProcedure.input(
 			z.object({
-				id: z.string().uuid(),
-				data: ExpenseUpdateSchema.omit({ id: true }),
+				id: z.string(),
+				data: ExpenseUpdateSchema,
 			})
 		).mutation(async (opts) => {
 			const { input } = opts;
@@ -41,7 +41,7 @@ export const appRouter = router({
 			const result = await db.expenses.update(input.id, updatedExpense);
 			return result;
 		}),
-		delete: publicProcedure.input(z.string().uuid()).mutation(async (opts) => {
+		delete: publicProcedure.input(z.string()).mutation(async (opts) => {
 			const { input } = opts;
 			const success = await db.expenses.delete(input);
 			if (!success) {
