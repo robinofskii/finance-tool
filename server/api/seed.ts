@@ -1,8 +1,9 @@
+import { join } from "@std/path";
 import { nanoid } from "nanoid";
 import type { Expense, FamilyMember } from "../types/index.ts";
 
 const dataDir = "data";
-const dataPath = `${dataDir}/data.json`;
+const dataPath = join(dataDir, "data.json");
 
 type db = {
 	expenses: Expense[];

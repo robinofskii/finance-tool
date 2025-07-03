@@ -1,6 +1,27 @@
 import { useState } from "react";
 import { trpc } from "../util/trpc.ts";
 
+type ExpenseInterval = "yearly" | "monthly" | "weekly" | "custom";
+
+interface EditFormData {
+	description: string;
+	amount: number;
+	interval: ExpenseInterval;
+	date: string;
+	customIntervalDays?: number;
+}
+
+interface ExpenseData {
+	id: string;
+	description: string;
+	amount: number;
+	interval: ExpenseInterval;
+	date: string;
+	customIntervalDays?: number;
+	createdAt: string;
+	updatedAt: string;
+}
+
 const Index = () => {
 	const { data, isLoading, error, refetch } = trpc.expenses.list.useQuery();
 	const updateExpense = trpc.expenses.update.useMutation({
@@ -15,15 +36,15 @@ const Index = () => {
 	});
 
 	const [editingId, setEditingId] = useState<string | null>(null);
-	const [editForm, setEditForm] = useState({
+	const [editForm, setEditForm] = useState<EditFormData>({
 		description: "",
 		amount: 0,
-		interval: "monthly" as "yearly" | "monthly" | "weekly" | "custom",
+		interval: "monthly",
 		date: "",
-		customIntervalDays: undefined as number | undefined,
+		customIntervalDays: undefined,
 	});
 
-	const handleEdit = (expense: any) => {
+	const handleEdit = (expense: ExpenseData) => {
 		setEditingId(expense.id);
 		setEditForm({
 			description: expense.description,
@@ -37,7 +58,7 @@ const Index = () => {
 	const handleSave = () => {
 		if (!editingId) return;
 		
-		const updateData: any = {
+		const updateData: Partial<ExpenseData> = {
 			description: editForm.description,
 			amount: editForm.amount,
 			interval: editForm.interval,
@@ -103,7 +124,7 @@ const Index = () => {
 										<label>Interval: </label>
 										<select
 											value={editForm.interval}
-											onChange={(e) => setEditForm(prev => ({ ...prev, interval: e.target.value as any }))}
+											onChange={(e) => setEditForm(prev => ({ ...prev, interval: e.target.value as ExpenseInterval }))}
 											style={{ marginLeft: "10px", padding: "5px" }}
 										>
 											<option value="yearly">Yearly</option>

@@ -6,7 +6,7 @@ export const ExpenseSchema: z.ZodType<Expense> = z.object({
 	description: z.string().min(1, "Description is required"),
 	amount: z.number().positive("Amount must be greater than 0"),
 	interval: z.enum(["yearly", "monthly", "weekly", "custom"]),
-	customIntervalDays: z.number().positive("Amount must be greater than").optional(),
+	customIntervalDays: z.number().positive("Custom interval days must be greater than 0").optional(),
 	date: z.string(),
 	createdAt: z.string(),
 	updatedAt: z.string(),
@@ -16,6 +16,6 @@ export const ExpenseUpdateSchema = z.object({
 	description: z.string().min(1, "Description is required").optional(),
 	amount: z.number().positive("Amount must be greater than 0").optional(),
 	interval: z.enum(["yearly", "monthly", "weekly", "custom"]).optional(),
-	customIntervalDays: z.number().positive("Amount must be greater than").optional(),
+	customIntervalDays: z.number().positive("Custom interval days must be greater than 0").optional(),
 	date: z.string().optional(),
 });
